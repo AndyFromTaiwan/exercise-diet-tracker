@@ -63,8 +63,7 @@ router.route('/update/:id').post((req, res) => {
       diet.description = description || diet.description;
 
       diet.save()
-        .then(() => res.json('Diet updated!'))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .then(() => res.json('Diet updated!'));
     })
     .catch(err => res.status(400).json('Error: ' + err));
 });
