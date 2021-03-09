@@ -29,9 +29,9 @@ router.route('/:id').delete((req, res) => {
   User.findById(req.params.id)
     .then(user => {
       const username = user.username;
-      Exercise.remove({ username: username })
+      Exercise.deleteMany({ username: username })
         .then( ()=> {
-          Diet.remove({ username: username })
+          Diet.deleteMany({ username: username })
             .then( ()=> { 
               user.remove()
                 .then(() => res.json(`User ${username} deleted!`));      
