@@ -34,12 +34,9 @@ router.route('/:id').delete((req, res) => {
           Diet.remove({ username: username })
             .then( ()=> { 
               user.remove()
-                .then(() => res.json(`User ${username} deleted!`))
-                .catch(err => res.status(400).json('Error: ' + err));
-          })
-          .catch(err => res.status(400).json('Error: ' + err));
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
+                .then(() => res.json(`User ${username} deleted!`));      
+          });
+        });
     })
     .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -53,8 +50,7 @@ router.route('/update/:id').post((req, res) => {
       user.email = email || user.email;
 
       user.save()
-        .then(() => res.json(`User ${username} email updated!`))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .then(() => res.json(`User ${username} email updated!`));
     })
     .catch(err => res.status(400).json('Error: ' + err));
 });
