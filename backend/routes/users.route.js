@@ -26,20 +26,22 @@ router.route('/:id').get((req, res) => {
 });
 
 router.route('/:id').delete((req, res) => {
-  //const username = req.body.username;
-  //TODO
   User.findById(req.params.id)
     .then(user => {
       const username = user.username;
-      console.log(username);
-      user.remove()
-        .then(() => res.json(`User ${username} deleted!`))
+      Exercise.remove({ username: username })
+        .then( ()=> {
+          Diet.remove({ username: username })
+            .then( ()=> { 
+              user.remove()
+                .then(() => res.json(`User ${username} deleted!`))
+                .catch(err => res.status(400).json('Error: ' + err));
+          })
+          .catch(err => res.status(400).json('Error: ' + err));
+        })
         .catch(err => res.status(400).json('Error: ' + err));
     })
     .catch(err => res.status(400).json('Error: ' + err));
-  //User.findByIdAndDelete(req.params.id)
-  //  .then(() => res.json(`User ${username} deleted!`))
-  //  .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/update/:id').post((req, res) => {
