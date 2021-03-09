@@ -1,5 +1,7 @@
 const router = require('express').Router();
 let User = require('../models/user.model');
+let Exercise = require('../models/exercise.model');
+let Diet = require('../models/diet.model');
 
 router.route('/').get((req, res) => {
   User.find()
@@ -24,17 +26,26 @@ router.route('/:id').get((req, res) => {
 });
 
 router.route('/:id').delete((req, res) => {
-  const username = req.body.username;
+  //const username = req.body.username;
   //TODO
-  User.findByIdAndDelete(req.params.id)
-    .then(() => res.json(`User ${username} deleted!`))
+  User.findById(req.params.id)
+    .then(user => {
+      const username = user.username;
+      console.log(username);
+      user.remove()
+        .then(() => res.json(`User ${username} deleted!`))
+        .catch(err => res.status(400).json('Error: ' + err));
+    })
     .catch(err => res.status(400).json('Error: ' + err));
+  //User.findByIdAndDelete(req.params.id)
+  //  .then(() => res.json(`User ${username} deleted!`))
+  //  .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/update/:id').post((req, res) => {
   const username = req.body.username;
   const email = req.body.email;
-  
+
   User.findById(req.params.id)
     .then(user => {
       user.email = email || user.email;
