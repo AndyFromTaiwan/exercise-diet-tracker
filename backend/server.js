@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const usersRouter = require('./routes/users.route');
-//const exercisesRouter = require('./routes/exercises.route');
-//const dietRouter = require('./routes/diets.route');
+const exercisesRouter = require('./routes/exercises.route');
+const dietsRouter = require('./routes/diets.route');
 
 // Server settings
 const app = express();
@@ -25,8 +25,8 @@ connection.once('open', () => {
 
 // Routers
 app.use('/users', usersRouter);
-//app.use('/exercises', exercisesRouter);
-//app.use('/diets', dietRouter);
+app.use('/exercises', exercisesRouter);
+app.use('/diets', dietsRouter);
 
 // Starts server
 app.listen(port, () => {

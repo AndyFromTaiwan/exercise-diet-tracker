@@ -34,6 +34,7 @@ router.route('/:id').delete((req, res) => {
 router.route('/update/:id').post((req, res) => {
   const username = req.body.username;
   const email = req.body.email;
+  
   User.findById(req.params.id)
     .then(user => {
       user.email = email || user.email;
