@@ -143,13 +143,13 @@ export default class UpdateUser extends Component {
                 required
                 className="form-control"
                 value={this.state.email}
-                onChange={ e => this.setState({email: e.target.value, message: ''}) }
+                onChange={e => this.setState({email: e.target.value, message: ''})}
               />
             </div>
             <div>
               <input type="button" value="Reselect a User" className="btn btn-primary margin-right" onClick={() => this.getUsers()}/>
               <input type="submit" value="Update" className="btn btn-primary margin-right" />
-              <input type="button" value={`Delete ${this.state.username}`} className="btn btn-primary margin-right" onClick={this.onDeleteUser}/>
+              <input type="button" value={`Delete ${this.state.username}`} className="btn btn-primary margin-right" onClick={() => this.onDeleteUser()}/>
             </div>
           </form>
         </div>
