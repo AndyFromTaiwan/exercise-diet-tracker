@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Navbar from "./components/navbar.component"
+import "./App.css";
+import Navbar from "./components/navbar.component";
 import ViewActivities from "./components/view-activities.component";
 import AddExercise from "./components/add-exercise.component";
 import AddDiet from "./components/add-diet.component";

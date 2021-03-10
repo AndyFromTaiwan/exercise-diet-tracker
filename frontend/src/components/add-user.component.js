@@ -1,28 +1,40 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class AddUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
-      email: ''
+      email: '',
+      message: ''
     }
   }
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault();
 
     const user = {
-      username: this.state.username,
+      username: this.state.username, 
       email: this.state.email
     }
 
-    console.log(user);
-    //TODO
-
-    this.setState({
-      username: '',
-      email: ''
+    axios.post('http://localhost:5000/users/add', user)
+    .then(res => {
+      let prompt =  <strong className="promptMsg">Creates user {user.username} successfully!</strong>;
+      this.setState({
+          username: '',
+          email: '',
+          message: prompt
+        });
+    })
+    .catch(err => {
+      let error = <strong className="errorMsg">{err.response.data}</strong>;
+      this.setState({
+        username: '',
+        email: '',
+        message: error
+      });
     });
   }
 
@@ -30,6 +42,7 @@ export default class AddUser extends Component {
     return (
       <div>
         <h3>Please register your info here:</h3>
+        {this.state.message}
         <form onSubmit={this.onSubmit}>
           <div className="form-group"> 
             <label>Username: </label>
@@ -37,7 +50,7 @@ export default class AddUser extends Component {
               required
               className="form-control"
               value={this.state.username}
-              onChange={ e => this.setState({username: e.target.value}) }
+              onChange={ e => this.setState({username: e.target.value, message: ''}) }
             />
           </div>
           <div className="form-group">
@@ -46,7 +59,7 @@ export default class AddUser extends Component {
               required
               className="form-control"
               value={this.state.email}
-              onChange={ e => this.setState({email: e.target.value}) }
+              onChange={ e => this.setState({email: e.target.value, message: ''}) }
             />
           </div>
           <div className="form-group">

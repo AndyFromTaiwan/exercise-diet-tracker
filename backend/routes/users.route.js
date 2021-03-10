@@ -16,7 +16,7 @@ router.route('/add').post((req, res) => {
   const newUser = new User({username, email});
   newUser.save()
     .then(() => res.json(`User ${username} added!`))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json('Error: '+ err));
 });
 
 router.route('/:id').get((req, res) => {
