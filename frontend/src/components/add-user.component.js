@@ -18,7 +18,7 @@ export default class AddUser extends Component {
       email: this.state.email
     }
 
-    axios.post('http://localhost:5000/users/add', user)
+    axios.post(`${process.env.REACT_APP_API_BASE_URL}/users/add`, user)
     .then(res => {
       let prompt =  <strong className="msg-prompt">Creates user {user.username} successfully!</strong>;
       this.setState({

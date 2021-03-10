@@ -20,7 +20,7 @@ export default class UpdateUser extends Component {
   }
 
   getUsers = (message='') => {
-    axios.get('http://localhost:5000/users/')
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/`)
       .then(res => {
         this.setState({
           users: res.data,
@@ -62,7 +62,7 @@ export default class UpdateUser extends Component {
       email: this.state.email
     }
 
-    axios.post(`http://localhost:5000/users/update/${this.state.id}`, user)
+    axios.post(`${process.env.REACT_APP_API_BASE_URL}/users/update/${this.state.id}`, user)
     .then(res => {
       let prompt =  <strong className="msg-prompt">Updates user {this.state.username} successfully!</strong>;
       this.setState({
@@ -79,7 +79,7 @@ export default class UpdateUser extends Component {
   }
 
   onDeleteUser = () => {
-    axios.delete(`http://localhost:5000/users/${this.state.id}`)
+    axios.delete(`${process.env.REACT_APP_API_BASE_URL}/users/${this.state.id}`)
     .then(res => {
       let prompt =  <strong className="msg-prompt">Deletes user {this.state.username} successfully!</strong>;
       this.getUsers(prompt);
