@@ -19,7 +19,7 @@ export default class UpdateUser extends Component {
     this.getUsers();
   }
 
-  getUsers = () => {
+  getUsers = (message='') => {
     axios.get('http://localhost:5000/users/')
       .then(res => {
         this.setState({
@@ -28,7 +28,7 @@ export default class UpdateUser extends Component {
           username: '',
           email: '',
           isUsersAvailable: true,
-          message: ''
+          message: message
         });
       })
       .catch(err => {
@@ -55,7 +55,7 @@ export default class UpdateUser extends Component {
     });
   }
   
-  onSubmit = e => {
+  onUpdateUser = e => {
     e.preventDefault();
     const user = {
       username: this.state.username, 
@@ -64,10 +64,25 @@ export default class UpdateUser extends Component {
 
     axios.post(`http://localhost:5000/users/update/${this.state.id}`, user)
     .then(res => {
-      let prompt =  <strong className="msg-prompt">Updates user {user.username} successfully!</strong>;
+      let prompt =  <strong className="msg-prompt">Updates user {this.state.username} successfully!</strong>;
       this.setState({
         message: prompt
       });
+    })
+    .catch(err => {
+      let error = <strong className="msg-error">{JSON.stringify(err)}</strong>;
+      if(err && err.response) error = <strong className="msg-error">{err.response.data}</strong>;
+      this.setState({
+        message: error
+      });
+    });
+  }
+
+  onDeleteUser = () => {
+    axios.delete(`http://localhost:5000/users/${this.state.id}`)
+    .then(res => {
+      let prompt =  <strong className="msg-prompt">Deletes user {this.state.username} successfully!</strong>;
+      this.getUsers(prompt);
     })
     .catch(err => {
       let error = <strong className="msg-error">{JSON.stringify(err)}</strong>;
@@ -121,7 +136,7 @@ export default class UpdateUser extends Component {
         <h3>Update info for {this.state.username} here:</h3>
         <div>{this.state.message}</div>
         <div>
-          <form onSubmit={this.onSubmit}>
+          <form onSubmit={this.onUpdateUser}>
             <div className="form-group">
               <label>Email: </label>
               <input  type="text"
@@ -132,9 +147,9 @@ export default class UpdateUser extends Component {
               />
             </div>
             <div>
-              <input type="button" value="Reselect a User" className="btn btn-primary margin-right" onClick={this.getUsers}/>
+              <input type="button" value="Reselect a User" className="btn btn-primary margin-right" onClick={() => this.getUsers()}/>
               <input type="submit" value="Update" className="btn btn-primary margin-right" />
-              <input type="button" value={`Delete ${this.state.username}`} className="btn btn-primary margin-right" />
+              <input type="button" value={`Delete ${this.state.username}`} className="btn btn-primary margin-right" onClick={this.onDeleteUser}/>
             </div>
           </form>
         </div>
