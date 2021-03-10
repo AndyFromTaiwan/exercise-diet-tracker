@@ -13,7 +13,6 @@ export default class AddUser extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-
     const user = {
       username: this.state.username, 
       email: this.state.email
@@ -21,7 +20,7 @@ export default class AddUser extends Component {
 
     axios.post('http://localhost:5000/users/add', user)
     .then(res => {
-      let prompt =  <strong className="promptMsg">Creates user {user.username} successfully!</strong>;
+      let prompt =  <strong className="msg-prompt">Creates user {user.username} successfully!</strong>;
       this.setState({
           username: '',
           email: '',
@@ -29,7 +28,8 @@ export default class AddUser extends Component {
         });
     })
     .catch(err => {
-      let error = <strong className="errorMsg">{err.response.data}</strong>;
+      let error = <strong className="msg-error">{JSON.stringify(err)}</strong>;
+      if(err && err.response) error = <strong className="msg-error">{err.response.data}</strong>;
       this.setState({
         username: '',
         email: '',

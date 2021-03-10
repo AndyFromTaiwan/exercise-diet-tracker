@@ -1,7 +1,15 @@
-.errorMsg {
+.msg-error {
   color: red
 }
 
-.promptMsg {
+.msg-prompt {
   color: green
+}
+
+.inline {
+  display: inline
+}
+
+.margin-right {
+  margin-right:10px !important;
 }
