@@ -41,7 +41,7 @@ export default class AddUser extends Component {
   render() {
     return (
       <div>
-        <h3>Please register your info here:</h3>
+        <h3>Please register your info here</h3>
         {this.state.message}
         <form onSubmit={this.onSubmit}>
           <div className="form-group"> 

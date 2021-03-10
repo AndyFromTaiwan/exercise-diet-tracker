@@ -100,6 +100,7 @@ export default class UpdateUser extends Component {
     if(this.state.users.length === 0) {
       return (
         <div>
+          <div>{this.state.message}</div>
           <span className="inline">No registered user yet, be the first user!</span>
           <Link to="/users/add" className="nav-link inline">Sign Up</Link>
         </div>
@@ -133,7 +134,7 @@ export default class UpdateUser extends Component {
     }
     return (
       <div>
-        <h3>Update info for {this.state.username} here:</h3>
+        <h3>Update info for {this.state.username} here</h3>
         <div>{this.state.message}</div>
         <div>
           <form onSubmit={this.onUpdateUser}>
