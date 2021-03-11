@@ -13,3 +13,13 @@
 .margin-right {
   margin-right:10px !important;
 }
+
+#iconTrash {
+  color: red;
+  margin: 5px;
+}
+
+#iconPencil {
+  color: blue;
+  margin: 5px;
+}

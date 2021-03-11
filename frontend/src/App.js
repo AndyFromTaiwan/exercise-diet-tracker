@@ -17,7 +17,8 @@ function App() {
       <div className="container">
         <br/>
         <Route path="/" exact component={ViewActivities} />
-        <Route path="/exercises/add" component={()=> <AddExercise templete="Create New"/>} />
+        <Route path="/exercises/add" component={AddExercise} />
+        <Route path="/exercises/update/:id" component={AddExercise} />
         <Route path="/diets/add" component={AddDiet} /> 
         <Route path="/users/add" component={AddUser} />
         <Route path="/users/update" component={UpdateUser} />

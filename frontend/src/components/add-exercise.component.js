@@ -16,11 +16,36 @@ export default class AddExercise extends Component {
       date: new Date(),
       description: '',
       isSubmitted: false,
+      templete: "Create New",
+      posturl: `${process.env.REACT_APP_API_BASE_URL}/exercises/add`,
       message: ''
     }
   }
 
   componentDidMount = () => {
+    if(this.props.match.params.id) {
+      axios.get(`${process.env.REACT_APP_API_BASE_URL}/exercises/`+this.props.match.params.id)
+      .then(res => {
+        this.setState({
+          username: res.data.username,
+          type: res.data.type,
+          duration: res.data.duration,
+          calorie: res.data.calorie,
+          date: new Date(res.data.date),
+          description: res.data.description,
+          templete: "Update",
+          posturl: `${process.env.REACT_APP_API_BASE_URL}/exercises/update/`+this.props.match.params.id
+        })   
+      })
+      .catch(err => {
+        let error = <strong className="msg-error">{JSON.stringify(err)}</strong>;
+        if(err && err.response) error = <strong className="msg-error">{err.response.data}</strong>;
+        this.setState({
+          message: error
+        });
+      });
+    }
+
     axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/`)
     .then(res => {
       this.setState({
@@ -72,7 +97,7 @@ export default class AddExercise extends Component {
       description: this.state.description
     }
 
-    axios.post(`${process.env.REACT_APP_API_BASE_URL}/exercises/add`, exercise)
+    axios.post(this.state.posturl, exercise)
     .then(res => {
       let prompt =  <strong className="msg-prompt">{res.data}</strong>;
       this.setState({ isSubmitted: true, message: prompt });
@@ -89,7 +114,7 @@ export default class AddExercise extends Component {
       return (
         <div>
           <div>{this.state.message}</div>
-          <span className="inline">{this.props.templete} Exereice Form Submitted!</span>
+          <span className="inline">{this.state.templete} Exereice Form Submitted!</span>
           <Link to="/" className="nav-link inline">View Activities</Link>
           <Link to="/exercises/add" className="nav-link inline" onClick={this.resetForm}>Record More Exercises</Link>
         </div>
@@ -106,7 +131,7 @@ export default class AddExercise extends Component {
     }
     return (
       <div>
-        <h3>{this.props.templete} Exercise Log</h3>
+        <h3>{this.state.templete} Exercise Log</h3>
         <div>{this.state.message}</div>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
@@ -177,7 +202,7 @@ export default class AddExercise extends Component {
             />
           </div>
           <div className="form-group">
-            <input type="submit" value={`${this.props.templete}`} className="btn btn-primary" />
+            <input type="submit" value={`${this.state.templete}`} className="btn btn-primary" />
           </div>
         </form>
       </div>
