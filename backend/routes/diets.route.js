@@ -54,13 +54,13 @@ router.route('/update/:id').post((req, res) => {
 
   Diet.findById(req.params.id)
     .then(diet => {    
-      diet.username = username || diet.username;
-      diet.meal = meal || diet.meal;
-      diet.food = food || diet.food;
-      diet.quantity = quantity || diet.quantity;
-      diet.calorie = calorie || diet.calorie;
-      diet.date = date ||mdiet.date;
-      diet.description = description || diet.description;
+      diet.username = username;
+      diet.meal = meal;
+      diet.food = food;
+      diet.quantity = quantity;
+      diet.calorie = calorie;
+      diet.date = date;
+      diet.description = description;
 
       diet.save()
         .then(() => res.json('Diet updated!'))

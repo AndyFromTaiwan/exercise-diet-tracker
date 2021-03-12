@@ -51,12 +51,12 @@ router.route('/update/:id').post((req, res) => {
 
   Exercise.findById(req.params.id)
     .then(exercise => {    
-      exercise.username = username || exercise.username;
-      exercise.type = type || exercise.type;
-      exercise.duration = duration || exercise.duration;
-      exercise.calorie = calorie || exercise.calorie;
-      exercise.date = date ||mexercise.date;
-      exercise.description = description || exercise.description;
+      exercise.username = username;
+      exercise.type = type;
+      exercise.duration = duration;
+      exercise.calorie = calorie;
+      exercise.date = date;
+      exercise.description = description;
 
       exercise.save()
         .then(() => res.json('Exercise updated!'))

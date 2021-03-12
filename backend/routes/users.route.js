@@ -50,7 +50,7 @@ router.route('/update/:id').post((req, res) => {
 
   User.findById(req.params.id)
     .then(user => {
-      user.email = email || user.email;
+      user.email = email;
 
       user.save()
         .then(() => res.json(`User ${username} email updated!`))
